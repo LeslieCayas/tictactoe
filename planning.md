@@ -85,3 +85,7 @@ add an event listener that will:
 ---- if all the items have the same content
 ------ turn the background to green
 -- alert winner 
+
+
+//things to think about
+ getting diagonals using  has .className
