@@ -89,3 +89,11 @@ add an event listener that will:
 
 //things to think about
  getting diagonals using  has .className
+
+ /*if (div[i].classList.contains('a') && div[i].classList.contains('x')) {
+  diagonalArray.push(div[i].innerText)
+} else if (div[i].classList.contains('b') && div[i].classList.contains('y')) {
+  diagonalArray.push(div[i].innerText)
+} else if (div[i].classList.contains('c') && div[i].classList.contains('z')) {
+  diagonalArray.push(div[i].innerText)
+}*/

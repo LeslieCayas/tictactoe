@@ -14,7 +14,7 @@ box.addEventListener("click", function () {
 
 let boxes = document.querySelectorAll("div")
 let playerOneStatus = true
-let row1Values, row2Values, row3Values, column1Values, column2Values, column3Values
+let row1Values, row2Values, row3Values, column1Values, column2Values, column3Values, diagonal1Values
 let diagonalArray = []
 
 for (i = 0; i < boxes.length; i++) {
@@ -26,19 +26,21 @@ for (i = 0; i < boxes.length; i++) {
     column1Values = getColumnValues(document.querySelectorAll(".x"))
     column2Values = getColumnValues(document.querySelectorAll(".y"))
     column3Values = getColumnValues(document.querySelectorAll(".z"))
-    diagonal1Values = getDiagonal(document.querySelectorAll(".m"))
-    diagonal2Values = getDiagonal(document.querySelectorAll(".n"))
+    diagonalsValues = getDiagonalValues(document.querySelectorAll('div'))
+    threeInADiagonal(diagonalsValues[0])
+    threeInADiagonal(diagonalsValues[1])
     threeInARow(row1Values)
     threeInARow(row2Values)
     threeInARow(row3Values)
     threeInAColumn(column1Values)
     threeInAColumn(column2Values)
     threeInAColumn(column3Values)
-    threeInADiagonal(diagonal1Values)
-    threeInADiagonal(diagonal2Values)
+
   }
   )
 }
+
+
 
 function threeInADiagonal(array) {
   let diagonalCheck = true
@@ -53,6 +55,34 @@ function threeInADiagonal(array) {
   }
 
 }
+
+
+
+function getDiagonalValues(div) {
+  let diagonalArray = []
+  let diagonalOneArray = []
+  let diagonalTwoArray = []
+  for (let i = 0; i < div.length; i++) {
+    if (div[i].className === "a x" || div[i].className === "b y" || div[i].className === "c z") {
+      diagonalOneArray.push(div[i].innerText)
+    } if (div[i].className === "a z" || div[i].className === "b y" || div[i].className === "c x") {
+      diagonalTwoArray.push(div[i].innerText)
+    }
+  }
+  diagonalArray.push(diagonalOneArray)
+  diagonalArray.push(diagonalTwoArray)
+  return diagonalArray
+
+  //if has class .a.x or .b.y or .c.z push into diagonalOneArray
+  //if has class .c.x or .b.y or .a.z push into diagonalTwoArray
+}
+/*if (div[i].classList.contains('a') && div[i].classList.contains('x')) {
+  diagonalArray.push(div[i].innerText)
+} else if (div[i].classList.contains('b') && div[i].classList.contains('y')) {
+  diagonalArray.push(div[i].innerText)
+} else if (div[i].classList.contains('c') && div[i].classList.contains('z')) {
+  diagonalArray.push(div[i].innerText)
+}*/
 function threeInARow(array) {
   let rowCheck = true
   for (let i = 0; i < array.length; i++) {
@@ -135,7 +165,7 @@ function getColumnValues(columnElements) {
   return columnArray // gives the array back to be used later
 }
 
-// Get Diagonal Elements
+/*// Get Diagonal Elements
 function getDiagonal(diagonalElements) {
   let diagonalArray = []
   for (let i = 0; i < diagonalElements.length; i++) {
@@ -143,7 +173,7 @@ function getDiagonal(diagonalElements) {
   }
   return diagonalArray
 }
-
+*/
 
 //let column1Values = getColumnValues(document.querySelectorAll(".x"))
 //let column2Values = getColumnValues(document.querySelectorAll(".y"))
