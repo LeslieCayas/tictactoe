@@ -3,12 +3,20 @@ body {
   margin-top: 10%;
   background: rgb(144,172,131);
   background: radial-gradient(circle, rgba(144,172,131,1) 0%, rgba(83,119,66,1) 100%);
+  font-family: 'Monsterrat', sans-serif;
+
 }
 h1, h2 {
   text-align: center;
-  font-family: 'Monsterrat', sans-serif;
   font-style: italic;
   color: white;
+  font-weight: 800;
+}
+h1 {
+    font-size: 50px
+}
+h2 {
+    font-size: 35px;
 }
 #game {
   display: grid;
@@ -19,14 +27,31 @@ h1, h2 {
   align-content: center;
 }
 div {
-  border: 5px solid rgb(88, 92, 86);
+  border: 5px solid #3F4235;
   background-color: rgb(111, 121, 106);
-  transition: 1s;
+  display: flex;
+  font-size: 50px;
+  color: #c3caba;
+  text-shadow: 5px -2px #3f4235;
+  font-weight: 800;
+  align-items: center;
+  justify-content: center;
 }
-.heartbeat {
-	-webkit-animation: heartbeat 1.5s ease-in-out infinite both;
-	animation: heartbeat 1.5s ease-in-out infinite both;
+
+#reset {
+    margin: 0 auto;
+    justify-content: center;
+    padding: 10px 20px;
+    border: transparent;
+    border-radius: 10px;
+    background-color: #707965;
+    color: white;
 }
-p {
-    color: black;
+main {
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
+}
+#reset {
+    margin-top: 40px;
 }
