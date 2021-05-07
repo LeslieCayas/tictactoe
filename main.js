@@ -1,265 +1,150 @@
-
-// TEST ZONE: area selected is cell 1
-/*let box = document.querySelector(".a.x")
-box.addEventListener("click", function () {
-  if (box.innerHTML === "O" || box.innerHTML === "X") {
-    alert("This spot is taken!")
-  } else {
-    console.log("clicked")
-  }
-})*/
-
-/* Creating player tokens */
-
-
 let boxes = document.querySelectorAll("div")
 let playerOneStatus = true
-let row1Values, row2Values, row3Values, column1Values, column2Values, column3Values, diagonal1Values
-let diagonalArray = []
-
+let row1Values, row2Values, row3Values, column1Values, column2Values, column3Values, diagonalsValues
+let counter = 0
 for (i = 0; i < boxes.length; i++) {
-  boxes[i].addEventListener("click", function (event) {
-    alternatePlayer(event)
-    row1Values = getRowValues(document.querySelectorAll(".a"))
-    row2Values = getRowValues(document.querySelectorAll(".b"))
-    row3Values = getRowValues(document.querySelectorAll(".c"))
-    column1Values = getColumnValues(document.querySelectorAll(".x"))
-    column2Values = getColumnValues(document.querySelectorAll(".y"))
-    column3Values = getColumnValues(document.querySelectorAll(".z"))
-    diagonalsValues = getDiagonalValues(document.querySelectorAll('div'))
-    threeInADiagonal(diagonalsValues[0])
-    threeInADiagonal(diagonalsValues[1])
-    threeInARow(row1Values)
-    threeInARow(row2Values)
-    threeInARow(row3Values)
-    threeInAColumn(column1Values)
-    threeInAColumn(column2Values)
-    threeInAColumn(column3Values)
-
-  }
-  )
+    boxes[i].addEventListener("click", function(event) {
+        alternatePlayer(event)
+        row1Values = getRowValues(document.querySelectorAll(".a"))
+        row2Values = getRowValues(document.querySelectorAll(".b"))
+        row3Values = getRowValues(document.querySelectorAll(".c"))
+        column1Values = getColumnValues(document.querySelectorAll(".x"))
+        column2Values = getColumnValues(document.querySelectorAll(".y"))
+        column3Values = getColumnValues(document.querySelectorAll(".z"))
+        diagonalsValues = getDiagonalValues(document.querySelectorAll('div'))
+        threeInADiagonal(diagonalsValues[0])
+        threeInADiagonal(diagonalsValues[1])
+        threeInARow(row1Values)
+        threeInARow(row2Values)
+        threeInARow(row3Values)
+        threeInAColumn(column1Values)
+        threeInAColumn(column2Values)
+        threeInAColumn(column3Values)
+        counter++
+        if (counter === 9) {
+            alert("draw!")
+        }
+    })
 }
 
-
-
-function threeInADiagonal(array) {
-  let diagonalCheck = true
-  for ( let i = 0; i < array.length; i++) {
-    if (array[i] != array[0]) {
-      diagonalCheck = false
-    }
-  } for (let i = 0; i < array.length; i++) {
-    if (diagonalCheck) {
-      console.log("three in a diagonal")
-    }
-  }
-
-}
-
-
-
-function getDiagonalValues(div) {
-  let diagonalArray = []
-  let diagonalOneArray = []
-  let diagonalTwoArray = []
-  for (let i = 0; i < div.length; i++) {
-    if (div[i].className === "a x" || div[i].className === "b y" || div[i].className === "c z") {
-      diagonalOneArray.push(div[i].innerText)
-    } if (div[i].className === "a z" || div[i].className === "b y" || div[i].className === "c x") {
-      diagonalTwoArray.push(div[i].innerText)
-    }
-  }
-  diagonalArray.push(diagonalOneArray)
-  diagonalArray.push(diagonalTwoArray)
-  return diagonalArray
-
-  //if has class .a.x or .b.y or .c.z push into diagonalOneArray
-  //if has class .c.x or .b.y or .a.z push into diagonalTwoArray
-}
-/*if (div[i].classList.contains('a') && div[i].classList.contains('x')) {
-  diagonalArray.push(div[i].innerText)
-} else if (div[i].classList.contains('b') && div[i].classList.contains('y')) {
-  diagonalArray.push(div[i].innerText)
-} else if (div[i].classList.contains('c') && div[i].classList.contains('z')) {
-  diagonalArray.push(div[i].innerText)
-}*/
-function threeInARow(array) {
-  let rowCheck = true
-  for (let i = 0; i < array.length; i++) {
-    if (array[0] !== array[i]) {
-      rowCheck = false
-    }
-  }
-  for (let i = 0; i < array.length; i++) {
-    if (rowCheck) {
-      console.log("There is 3 in a row")
-    }
-  }
-}
-function threeInAColumn(array) {
-  let columnCheck = true
-  for (let i = 0; i < array.length; i++) {
-    if (array[0] !== array[i]) {
-      columnCheck = false
-    }
-  }
-  for (let i = 0; i < array.length; i++) {
-    if (columnCheck) {
-      console.log("There is 3 in a column")
-    }
-  }
-}
-
-/* function hi (thingToInspect) {
-  for (let i = 0; i < thingtoInspect.length; i++)
-  */
-function placeX(event) {
-  event.target.innerText = "X"
-  document.querySelector("h2").innerText = "Player Two's Turn"
-}
-
-function placeO(event) {
-  event.target.innerText = "O"
-  document.querySelector("h2").innerText = "Player One's Turn"
-
-}
-// Able to alternate player and prevent player from clicking a taken spot
-function alternatePlayer(event) {
-  console.log(playerOneStatus)
-  if (playerOneStatus) {
-    if (event.target.innerText == "X" || event.target.innerText == "O") {
-      alert("something here")
-    } else {
-      placeX(event) //puts an X
-      playerOneStatus = false
-    }
-  } else if (playerOneStatus === false) {
-    if (event.target.innerText == "X" || event.target.innerText == "O") {
-      alert("something here")
-    } else {
-      placeO(event) //puts an O
-      playerOneStatus = true
-    }
-  }
-}
-
-// Get Row Elements
+// Get Row Elements and Three in a Row
 function getRowValues(rowElements) {
-  let rowArray = []
-  for (let i = 0; i < rowElements.length; i++) {
-    rowArray.push(rowElements[i].innerText)
-  }
-  return rowArray // gives the array back to be used later
-}
-//let row1Values = getRowValues(document.querySelectorAll(".a"))
-//let row2Values = getRowValues(document.querySelectorAll(".b"))
-//let row3Values = getRowValues(document.querySelectorAll(".c"))
+    let rowArray = []
 
-
-// Get Column Elements
-function getColumnValues(columnElements) {
-  let columnArray = []
-  for (let i = 0; i < columnElements.length; i++) {
-    columnArray.push(columnElements[i].textContent)
-  }
-  return columnArray // gives the array back to be used later
-}
-
-/*// Get Diagonal Elements
-function getDiagonal(diagonalElements) {
-  let diagonalArray = []
-  for (let i = 0; i < diagonalElements.length; i++) {
-    diagonalArray.push(diagonalElements[i].innerText)
-  }
-  return diagonalArray
-}
-*/
-
-//let column1Values = getColumnValues(document.querySelectorAll(".x"))
-//let column2Values = getColumnValues(document.querySelectorAll(".y"))
-//let column3Values = getColumnValues(document.querySelectorAll(".z"))
-
-// Get Diagonal Elements
-
-/*
-get the following innerText
-.a.z .b.y .c.z
-.a.z .b.y .c.x
-
-push into an array where
-diagonal 1 = .a.x .b.y .c.z
-diagonal 2 = .c.x .b.y .a.z
-*/
-
-/*function getDiagonalValues() {
-  let diagonalArray = []
-  for (let i = 0; i < boxes.length; i++) {
-    if (boxes[i].className === "a x" || "b y" || "c z") {
-      diagonalArray.push(boxes[i].textContent)
+    for (let i = 0; i < rowElements.length; i++) {
+        rowArray.push(rowElements[i].innerText)
     }
-    return diagonalArray
-  }
-  //if has class .a.x or .b.y or .c.z push into diagonalOneArray
-  //if has class .c.x or .b.y or .a.z push into diagonalTwoArray
-}*/
 
+    return rowArray // gives the array back to be used later
 
-
-/*
-analyse the row
-assume the row has the same content in each cell
-check through each cell
-if the cell has diff content state that the row is uneven
-check through each cell again
-if the rows are all the same declare that the row is found
-*//*
-function rowCheck(row) {
-  for (let i = 0; i < row.length; i++) {
-    let threeInARow = true
-    for (let i = 0; i < row.length; i++) {
-      if (row[i].innerText !== "X" || row[i].innerText !== "O") {
-        threeInARow = false
-      }
-    }
-    for (let i = 0; i < row.length; i++) {
-      if (threeInARow) {
-        row[i].style.backgroundColor = "green"
-      }
-    }
-  }
 }
-rowCheck(row1Values)*/
-
-//turns all cells green after clicking three in the second row regardless of character
-/*
-for (i = 0; i < row1Values.length; i++) {
-  row1Values[i].addEventListener("click", function (event) {
-    //event.target.innerText = "X"
+function threeInARow(array) {
     let rowCheck = true
 
-    for (let i = 0; i < row1Values.length; i++) {
-      if (row1Values[i].innerText !== "X" && row1Values[i].innerText !== "O") {
-        rowCheck = false
-      }
+    for (let i = 0; i < array.length; i++) {
+        if (array[0] !== array[i] || array[i] === '') {
+            rowCheck = false
+        }
     }
-    for (let i = 0; i < row1Values.length; i++) {
-      if (rowCheck) {
-        row1Values[i].style.backgroundColor = "green"
-      }
+
+    if (rowCheck) {
+        alert("There is 3 in a row")
     }
-  })
+
 }
 
-// adds click listener to all boxes
-// can probably be done in another way
-/*for (i = 0; i < rows.length; i++) {
-  for (j=0; j < rows[i].length; j++) {
-    rows[i][j].addEventListener("click", function(event) {
-      console.log("clicked")
-      event.target.innerText = "X"
-      let rowCheck = true
 
-    })
-  }
-}*/
+// Get Column Elements and Three in a Column
+function getColumnValues(columnElements) {
+    let columnArray = []
 
+    for (let i = 0; i < columnElements.length; i++) {
+        columnArray.push(columnElements[i].textContent)
+    }
+
+    return columnArray // gives the array back to be used later
+}
+
+function threeInAColumn(array) {
+    let columnCheck = true
+
+    for (let i = 0; i < array.length; i++) {
+        if (array[0] !== array[i] || array[i] === '') {
+            columnCheck = false
+            break
+        } 
+    }
+    if (columnCheck) {
+        alert("There is 3 in a column")
+    }
+}
+
+
+// Get Diagonal Elements and Three in a Diagonal
+function getDiagonalValues(div) {
+    let diagonalArray = []
+    let diagonalOneArray = []
+    let diagonalTwoArray = []
+
+    for (let i = 0; i < div.length; i++) {
+
+        if (div[i].className === "a x" || div[i].className === "b y" || div[i].className === "c z") {
+            diagonalOneArray.push(div[i].innerText)
+
+        } if (div[i].className === "a z" || div[i].className === "b y" || div[i].className === "c x") {
+            diagonalTwoArray.push(div[i].innerText)
+        }
+    }
+    diagonalArray.push(diagonalOneArray)
+    diagonalArray.push(diagonalTwoArray)
+    return diagonalArray
+}
+function threeInADiagonal(array) {
+    let diagonalCheck = true
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] != array[0] || array[i] === '') {
+            diagonalCheck = false
+        }
+    }
+    if (diagonalCheck) {
+        alert("three in a diagonal")
+    }
+
+}
+
+
+
+
+
+
+
+
+// Able to alternate player and prevent player from clicking a taken spot
+function alternatePlayer(event) {
+    console.log(playerOneStatus)
+    if (playerOneStatus) {
+        if (event.target.innerText == "X" || event.target.innerText == "O") {
+            alert("something here")
+        } else {
+            event.target.innerText = "X"
+            //let x = document.createElement("p")
+            //x.setAttribute("id", "playerX")
+            //x.innerHTML = "X"
+            //event.target.appendChild(x)
+            document.querySelector("h2").innerText = "Player Two's Turn"
+            playerOneStatus = false
+        }
+    } else if (playerOneStatus === false) {
+        if (event.target.innerText == "X" || event.target.innerText == "O") {
+            alert("something here")
+        } else {
+            event.target.innerText = "O"
+            //let o = document.createElement("p")
+            //o.setAttribute("id", "playerO")
+            //o.innerHTML = "O"
+            //event.target.appendChild(o)
+            document.querySelector("h2").innerText = "Player One's Turn"
+            playerOneStatus = true
+        }
+    }
+}
