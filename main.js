@@ -3,6 +3,8 @@ const boxes = document.querySelectorAll("div")
 const gameStatus = document.querySelector("h2")
 let playerOneStatus = true
 let gameDraw = false
+let winner = false
+
 let row1Values, row2Values, row3Values, column1Values, column2Values, column3Values, diagonalsValues
 let movesCounter = 0
 
@@ -38,9 +40,9 @@ function gamePlay(event) {
     threeInALine(column2Values)
     threeInALine(column3Values)
 
-    // If the max number of moves (9) is reached, it is considered a draw
+    // If the max number of moves (9) is reached and there is no winner, it is considered a draw
     movesCounter++
-    if (movesCounter === 9) {
+    if (winner === false && movesCounter === 9) {
         alert("draw!")
         gameStatus.innerText = "It's a draw! Play again?"
         endGame()
@@ -85,9 +87,8 @@ function getDiagonalValues(divElements) {
 
 // Checks if there are three of the same tokens in each Row, Column or Diagonal
 function threeInALine(elementsArray) {
-
     let threeTokensCheck = true
-
+    // Prevent reading blank cells as part of the array
     for (let i = 0; i < elementsArray.length; i++) {
         if (elementsArray[0] !== elementsArray[i] || elementsArray[i] === '') {
             threeTokensCheck = false
@@ -96,13 +97,13 @@ function threeInALine(elementsArray) {
 
     if (threeTokensCheck) {
         if (playerOneStatus !== false) {
+            winner = true
             alert("player two wins!")
             gameStatus.innerText = "Player Two Wins!"
-
         } else if (playerOneStatus === false) {
+            winner = true
             alert("player one wins!")
             gameStatus.innerText = "Player One Wins!"
-
         }
         endGame()
 
@@ -152,6 +153,7 @@ resetButton.addEventListener("click", function () {
         movesCounter = 0
         boxes[i].innerText = ''
         playerOneStatus = true
+        winner = false
         gameStatus.innerText = "Player One's Turn"
         boxes[i].removeEventListener("click", gamePlay)
         boxes[i].addEventListener("click", gamePlay)
