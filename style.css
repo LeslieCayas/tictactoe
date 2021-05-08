@@ -18,6 +18,11 @@ h1 {
 h2 {
     font-size: 35px;
 }
+main {
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
+}
 #game {
   display: grid;
   grid-template-columns: repeat(3, 100px);
@@ -37,7 +42,6 @@ div {
   align-items: center;
   justify-content: center;
 }
-
 #reset {
     margin: 0 auto;
     justify-content: center;
@@ -46,12 +50,5 @@ div {
     border-radius: 10px;
     background-color: #707965;
     color: white;
-}
-main {
-    text-align: center;
-    align-items: center;
-    margin: 0 auto;
-}
-#reset {
     margin-top: 40px;
 }

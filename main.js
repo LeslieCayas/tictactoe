@@ -2,6 +2,7 @@
 const boxes = document.querySelectorAll("div")
 const gameStatus = document.querySelector("h2")
 let playerOneStatus = true
+let gameDraw = false
 let row1Values, row2Values, row3Values, column1Values, column2Values, column3Values, diagonalsValues
 let movesCounter = 0
 
@@ -28,19 +29,20 @@ function gamePlay(event) {
     diagonalsValues = getDiagonalValues(document.querySelectorAll('div'))
 
     // Determine if there are 3 of the same token in a row, column or diagonal
-    lineOfThree(diagonalsValues[0])
-    lineOfThree(diagonalsValues[1])
-    lineOfThree(row1Values)
-    lineOfThree(row2Values)
-    lineOfThree(row3Values)
-    lineOfThree(column1Values)
-    lineOfThree(column2Values)
-    lineOfThree(column3Values)
+    threeInALine(diagonalsValues[0])
+    threeInALine(diagonalsValues[1])
+    threeInALine(row1Values)
+    threeInALine(row2Values)
+    threeInALine(row3Values)
+    threeInALine(column1Values)
+    threeInALine(column2Values)
+    threeInALine(column3Values)
 
     // If the max number of moves (9) is reached, it is considered a draw
     movesCounter++
     if (movesCounter === 9) {
         alert("draw!")
+        gameStatus.innerText = "It's a draw! Play again?"
         endGame()
     }
 }
@@ -60,18 +62,19 @@ function lineValues(rowOrColumnElements) {
 
 /* Gets Diagonal Elements and stores them as 2 arrays in an array */
 // Groups 2 diagonals based on the row and column position, these diagonals are grouped into a Diagonals variable
-function getDiagonalValues(div) {
+function getDiagonalValues(divElements) {
     let diagonalArray = []
     let diagonalOneArray = []
     let diagonalTwoArray = []
 
-    for (let i = 0; i < div.length; i++) {
+    for (let i = 0; i < divElements.length; i++) {
 
-        if (div[i].className === "r1 c1" || div[i].className === "r2 c2" || div[i].className === "r3 c3") {
-            diagonalOneArray.push(div[i].innerText)
+        if (divElements[i].className === "r1 c1" || divElements[i].className === "r2 c2" || divElements[i].className === "r3 c3") {
+            diagonalOneArray.push(divElements[i].innerText)
 
-        } if (div[i].className === "r1 c3" || div[i].className === "r2 c2" || div[i].className === "r3 c1") {
-            diagonalTwoArray.push(div[i].innerText)
+        } if (divElements[i].className === "r1 c3" || divElements[i].className === "r2 c2" || divElements[i].className === "r3 c1") {
+            diagonalTwoArray.push(divElements[i].innerText)
+
         }
     }
 
@@ -81,21 +84,22 @@ function getDiagonalValues(div) {
 }
 
 // Checks if there are three of the same tokens in each Row, Column or Diagonal
-function lineOfThree(elementsArray) {
-    let rowCheck = true
+function threeInALine(elementsArray) {
+
+    let threeTokensCheck = true
 
     for (let i = 0; i < elementsArray.length; i++) {
         if (elementsArray[0] !== elementsArray[i] || elementsArray[i] === '') {
-            rowCheck = false
+            threeTokensCheck = false
         }
     }
 
-    if (rowCheck) {
+    if (threeTokensCheck) {
         if (playerOneStatus !== false) {
             alert("player two wins!")
             gameStatus.innerText = "Player Two Wins!"
 
-        } else {
+        } else if (playerOneStatus === false) {
             alert("player one wins!")
             gameStatus.innerText = "Player One Wins!"
 
@@ -103,32 +107,31 @@ function lineOfThree(elementsArray) {
         endGame()
 
     }
+
 }
 
 // Alternates between Player 1 and Player 2
 // Prevents players from placing a token in a taken spot
 function alternatePlayer(event) {
     if (playerOneStatus) {
-        if (event.target.innerText == "X" || event.target.innerText == "O") {
+        if (event.target.innerText === "X" || event.target.innerText === "O") {
             alert("something here")
         } else {
-            event.target.innerText = "X"
-            //let x = document.createElement("p")
-            //x.setAttribute("id", "playerX")
-            //x.innerHTML = "X"
-            //event.target.appendChild(x)
+            let x = document.createElement("p")
+            x.setAttribute("id", "playerX")
+            x.innerHTML = "X"
+            event.target.appendChild(x)
             gameStatus.innerText = "Player Two's Turn"
             playerOneStatus = false
         }
     } else if (playerOneStatus === false) {
-        if (event.target.innerText == "X" || event.target.innerText == "O") {
+        if (event.target.innerText === "X" || event.target.innerText === "O") {
             alert("something here")
         } else {
-            event.target.innerText = "O"
-            //let o = document.createElement("p")
-            //o.setAttribute("id", "playerO")
-            //o.innerHTML = "O"
-            //event.target.appendChild(o)
+            let o = document.createElement("p")
+            o.setAttribute("id", "playerO")
+            o.innerHTML = "O"
+            event.target.appendChild(o)
             gameStatus.innerText = "Player One's Turn"
             playerOneStatus = true
         }
@@ -144,7 +147,7 @@ function endGame() {
 
 // Allows button to reset the board and the game
 const resetButton = document.querySelector("#reset")
-resetButton.addEventListener("click", function (event) {
+resetButton.addEventListener("click", function () {
     for (i = 0; i < boxes.length; i++) {
         movesCounter = 0
         boxes[i].innerText = ''

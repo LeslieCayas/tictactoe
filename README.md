@@ -3,11 +3,27 @@
 This is my tic-tac-toe game using "vanilla Javascript", HTML and CSS.
 To develop this game, a grid was made using HTML and CSS where the rows and columns were assigned by giving classes.
 
-APPROACH:
-1. Initially wrote out functions to check row,column and diagonal
-2. Further condensed functions as they were found to be repetitive
-3. After condensing the functions, each function was given a separate name and placed in an even listener to allow general readability
+## How To Play:
+1. Access the game <a href="https://lesliecayas.github.io/tictactoe/">here.</a>
+2. Play the game just like any other tic-tac-toe game.
+3. Reset the game by clicking the "Play Again" button.
 
-FUTURE IMPROVEMENTS:
-- Some repetition is still evident in the current code i.e. threeInARow and threeInAColumn function can be further condensed
-- Instead of
+## Approach:
+1. Set up the gameboard as a grid with rows and columns assigned classes. 
+2. Stored data from each row and column as an array.
+3. Initially wrote out functions to check row and column.
+4. Developed a function that would store the diagonals as an array based on `.className`
+    - After `diagonalOneArray` and `diagonalTwoArray` were made, these was grouped and defined as the grid's diagonals.
+5. Wrote out function that would check if there are 3 in a row in each diagonal.
+4. Further condensed the three in a row functions as they were found to be repetitive.
+5. After condensing the functions, each function was given a separate name and placed in an event listener for the game board to allow overall readability.
+
+## Problems:
+- The cell `div`s initially had text inside them while the functions were created.
+    - This made it difficult for the threeInARow function as it detects blank cells as part of being three in a row.
+    - This was ammended by including blank statements `''` in the conditional.
+
+## Future Improvements:
+- Highlight where the player has won.
+- Adjust for a 4x4 grid:
+    - `getDiagonalsValues` function would have to be adjusted along with HTML to avoid repetition of .className in the conditions.
